@@ -106,7 +106,9 @@ body {
     background: crimson;
 }
 
-.food-items {}
+.food-items {
+    display: none;
+}
 
 #biryani,
 #chicken,

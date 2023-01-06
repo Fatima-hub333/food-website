@@ -332,7 +332,7 @@ function cartItems() {
         span.innerText = item.quantity;
         let btn2 = document.createElement('button')
         btn2.setAttribute('class', "increase-item")
-        btn2.innerHTML = '+';
+        btn2.innerText = '+';
 
         rowData3.appendChild(btn1)
         rowData3.appendChild(span)
@@ -363,7 +363,7 @@ function incrementItem() {
     let itemToInc = this.parentNode.previousSibling.innerText;
     console.log(itemToInc);
 
-    let incObj = cartData.find(element => element.name = itemToInc);
+    let incObj = cartData.find(element => element.name == itemToInc);
     incObj.quantity += 1;
 
     currPrice = (incObj.price * incObj.quantity - incObj.price *
@@ -381,7 +381,9 @@ function decrementItem() {
     let decObj = cartData.find(element => element.name == itemToDec);
     let ind = cartData.indexOf(decObj)
     if (decObj.quantity > 1) {
-        currPrice = (decObj.price * decObj.quantity - decObj * price(decObj.quantity - 1)) / decObj.quantity
+        currPrice = (decObj.price * decObj.quantity - decObj.price * (decObj.quantity - 1)) / (decObj.quantity);
+        decObj.quantity -= 1;
+        decObj.price = currPrice * decObj.quantity;
     } else {
         document.getElementById(decObj.id).classList.remove('toggle-heart');
         cartData.splice(ind, 1);
@@ -413,7 +415,7 @@ function totalAmount() {
 }
 
 document.getElementById('cart-plus').addEventListener('click', cartToggle);
-document.getElementById('m-cart-plus').addEventListener('click', cartToggle);
+// document.getElementById('m-cart-plus').addEventListener('click', cartToggle);
 
 function cartToggle() {
     if (cartData.length > 0) {
@@ -423,5 +425,24 @@ function cartToggle() {
         document.getElementById('cart-page').classList.toggle('cart-toggle');
         // document.getElementById('category-header').classList.toggle('toggle-category');
         document.getElementById('checkout').classList.toggle('cart-toggle');
+        flag = true;
     }
+    else {
+        alert("Currently no items in cart");
+    }
+}
+
+document.getElementById('add-address').addEventListener('click', addAddress);
+// document.getElementById('m-add-address').addEventListener('click', addAddress);
+
+function addAddress() {
+    let address = prompt('Enter your Address');
+    if (address) {
+       document.getElementById('add-address').innerText = ' ' + address; 
+    //    document.getElementById('m-add-address').innerText = ' ' + address; 
+    } else {
+        alert("Address not added");
+    }
+    
+
 }
